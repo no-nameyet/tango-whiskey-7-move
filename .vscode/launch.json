@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "データを収集する",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${config:tango-whiskey-7.move.collect-move.args.home}/src/main/",
+            "console": "integratedTerminal",
+            "python": "${config:tango-whiskey-7.move.collect-move.args.home}/.venv/Scripts/python.exe",
+            "args": "",
+            "justMyCode": true,
+            "preLaunchTask": "UVを初期化する",
+        }
+    ]
+}

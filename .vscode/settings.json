@@ -1,0 +1,16 @@
+{
+    // 表示の除外
+    "files.exclude": {
+        "**/.git": true,
+        "**/.venv": true,
+        "**/__pycache__": true,
+    },
+    // collect-moveの定数
+    "tango-whiskey-7.move.collect-move.args": {
+        "home": "${workspaceFolder}/collect-move",
+    },
+    // pagesの定数
+    "tango-whiskey-7.move.pages.args": {
+        "data": "${workspaceFolder}/pages/datasbe",
+    },
+}

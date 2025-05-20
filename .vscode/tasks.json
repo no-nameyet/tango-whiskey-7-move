@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "UVを初期化する",
+            "type": "shell",
+            "command": "uv venv .venv; uv pip install -r requirements.txt",
+            "options": {
+                "cwd": "${config:tango-whiskey-7.move.collect-move.args.home}",
+            },
+        },
+        {
+            "label": "UVを削除する",
+            "type": "shell",
+            "command": "Remove-Item -Recurse -Force .venv",
+            "options": {
+                "cwd": "${config:tango-whiskey-7.move.collect-move.args.home}",
+            },
+        },
+    ],
+}

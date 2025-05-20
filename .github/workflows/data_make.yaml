@@ -1,0 +1,35 @@
+name: データ取得ワークフロー
+on:
+  push:
+    branches:
+      - 'main'
+  schedule:
+    - cron: '*/30 * * * *'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+        with:
+          ref: htdocs
+      - name: データのダウンロード
+        run: |
+          pip install -r ./collect-move/requirements.txt
+          python ./collect-move/src/main/
+      - name: 差分チェック
+        run: |
+          if ! diff -qr ./tmp/ ./docs/resource/data/ | grep -q ".json"; then
+            echo "差分なし"
+            exit 0
+          fi
+      - name: JSONをコピー
+        run: |
+          rsync -av --delete --include="*.json" --exclude="*"  ./tmp/ ./docs/resource/data/
+      - name: 変更をコミット
+        run: |
+          git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+          git config --global user.name "${{ secrets.GIT_USER_EMAIL }}"
+          git add .
+          git commit -m "JSONをコミット"
+          git push origin htdocs
