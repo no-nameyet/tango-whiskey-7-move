@@ -21,12 +21,16 @@ jobs:
         run: |
           if ! diff -qr ./tmp/ ./docs/resource/data/ | grep -q ".json"; then
             echo "差分なし"
+            echo "FLOW_STOP=1" >>　$GITHUB_ENV
             exit 0
           fi
+          echo "FLOW_STOP=0" >>　$GITHUB_ENV
       - name: JSONをコピー
+        if: ${{ env.FLOW_STOP == '0' }}
         run: |
           rsync -av --delete --include="*.json" --exclude="*"  ./tmp/ ./docs/resource/data/
       - name: 変更をコミット
+        if: ${{ env.FLOW_STOP == '0' }}
         run: |
           git config --global user.name "${{ secrets.GIT_USER_NAME }}"
           git config --global user.name "${{ secrets.GIT_USER_EMAIL }}"
