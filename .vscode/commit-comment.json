@@ -1,0 +1,59 @@
+{
+    "$schema": "https://bendera.github.io/vscode-commit-message-editor/schemas/config-v1.schema.json",
+    "configVersion": "1",
+    "staticTemplate": [],
+    "dynamicTemplate": [
+        "{type}: {description}",
+        "close #issue{issue}",
+        "",
+        "{body}"
+    ],
+    "tokens": [
+        {
+            "label": "種類",
+            "name": "type",
+            "type": "enum",
+            "combobox": true,
+            "options": [
+                {
+                    "label": "⚡ 要望／提案対応",
+                    "value": "⚡",
+                    "description": "Issue - ⚡要望／改善提案 に関する修正はこちら"
+                },
+                {
+                    "label": "🐛 バグ対応",
+                    "value": "🐛",
+                    "description": "Issue - 🐛バグ報告 に関する修正はこちら"
+                },
+                {
+                    "label": "📚 ドキュメント／プロパティ対応",
+                    "value": "📚",
+                    "description": "Issue - 📚ドキュメント／プロパティ改善提案 に関する修正はこちら"
+                }
+            ]
+        },
+        {
+            "label": "件名",
+            "name": "description",
+            "description": "どのような修正をしたのか簡単に書く",
+            "type": "text",
+            "multiline": false
+        },
+        {
+            "label": "Issue",
+            "name": "issue",
+            "description": "Issue番号を書く",
+            "type": "text",
+            "multiline": false
+        },
+        {
+            "label": "詳細",
+            "name": "body",
+            "description": "詳細な説明が必要な場合は書く",
+            "type": "text",
+            "multiline": true,
+            "lines": 5,
+            "maxLines": 10
+        }
+    ]
+}
