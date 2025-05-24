@@ -1,6 +1,7 @@
 import os
 import re
 import json
+import time
 from bs4 import BeautifulSoup
 
 def convert(file_path):
@@ -22,6 +23,8 @@ def convert(file_path):
     __output_json(__skills__sort(soup), 'skills__sort.json')
     __output_json(__skills__idx_prefix(soup), 'skills__idx-prefix.json')
 
+    # メタ情報
+    __output_json(__metadata(paradox), 'metadata.json')
 
 
 # JSONを出力する
@@ -35,10 +38,6 @@ def __paradox(soup):
     for idx, part in enumerate(soup.select('.grid-parts')):
         id = part.select('a')[0].get('href').split('#')[-1]
 
-        target = 0
-        effect1 = ''
-        effect2 = ''
-        skill = []
         paradox[id] = {
             'name': part.select('h4')[0].text,
             'status': part.select('span')[0].text,
@@ -116,3 +115,10 @@ def __skills__idx_prefix(soup):
         options = list(map(lambda x: x.get('value'), soup.select('.filter-skill > optgroup[label="' + prefix + '"] > option')))
         skills[prefix] = options
     return skills
+
+# メタデータの出力
+def __metadata(paradox):
+    return {
+        'timestamp': time.ctime(),
+        'paradox_count': len(paradox),
+    }

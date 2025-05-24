@@ -110,6 +110,10 @@ body {
 #search-condision__button > ul > li {
     list-style: none;
 }
+#search-condision__meta {
+    text-align: center;
+    font-size: 0.8em;
+}
 
 #search-result {
     width: 100%;
