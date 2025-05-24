@@ -5,6 +5,7 @@ export class Db {
         this.#dbLoad();
     };
     async #dbLoad() {
+        this.#data['meta'] = await this.#jsonLoad('./resource/data/metadata.json');
         this.#data['paradox'] = await this.#jsonLoad('./resource/data/paradox.json');
         this.#data['skills'] = await this.#jsonLoad('./resource/data/skills.json');
         this.#data['idx__status'] = await this.#jsonLoad('./resource/data/paradox__status.json');
@@ -13,11 +14,15 @@ export class Db {
         this.#data['idx__effect1'] = await this.#jsonLoad('./resource/data/paradox__effect1.json');
         this.#data['idx__effect2'] = await this.#jsonLoad('./resource/data/paradox__effect2.json');
         this.#data['sort__skills'] = await this.#jsonLoad('./resource/data/skills__sort.json');
-        this.#data['sort__paradox'] = await this.#jsonLoad('./resource/data/paradox__sort.json');
     };
     async #jsonLoad(path) {
         return await (await fetch(path)).json();
     };
+
+    async metadata() {
+        this.#data['sort__paradox'] = await this.#jsonLoad('./resource/data/paradox__sort.json');
+        return this.#data['sort__paradox'];
+    }
 
     search(condition) {
         let data = [];

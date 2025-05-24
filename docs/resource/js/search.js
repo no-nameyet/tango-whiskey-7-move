@@ -81,8 +81,14 @@ function initialize() {
                     <li><button type="reset">条件クリア</button></li>
                 </ul>
             </div>
+            <div id="search-condision__meta"></div>
         </form>
     `);
+
+    (async function() {
+        let meta = await db.metadata();
+        $('#search-condision__meta').insertAdjacentHTML('afterbegin', meta.timestamp);
+    })();
 
     $$('.search-condision__select').forEach(elmn => elmn.addEventListener('change', event => {
         let condition = Object.fromEntries(new FormData($('form')).entries());
@@ -108,7 +114,7 @@ function initialize() {
                         pdx_html += `
                             <li class="search-result__paradox">
                                 <dl class="search-result__detail">
-                                    <dt class="search-result__name">${rdx.name}</dt>
+                                    <dt class="search-result__name">${rdx.name}（${rdx.status}${rdx.target}）</dt>
                                     <dd class="search-result__skills">
                                         <ul class="search-result__skill-list">
                                             <li class="search-result__skill-row">${rdx.skill[0]}</li>
