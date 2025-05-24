@@ -81,8 +81,14 @@ function initialize() {
                     <li><button type="reset">条件クリア</button></li>
                 </ul>
             </div>
+            <div id="search-condision__meta"></div>
         </form>
     `);
+
+    (async function() {
+        let meta = await db.metadata();
+        $('#search-condision__meta').insertAdjacentHTML('afterbegin', meta.timestamp);
+    })();
 
     $$('.search-condision__select').forEach(elmn => elmn.addEventListener('change', event => {
         let condition = Object.fromEntries(new FormData($('form')).entries());
