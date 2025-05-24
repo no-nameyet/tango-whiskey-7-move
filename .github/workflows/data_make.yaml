@@ -1,10 +1,9 @@
 name: データ取得ワークフロー
 on:
-  push:
-    branches:
-      - 'main'
+  workflow_dispatch:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/30 4-16 * * 3'
+    - cron: '0 */6 * * *'
 jobs:
   deploy:
     runs-on: ubuntu-latest
