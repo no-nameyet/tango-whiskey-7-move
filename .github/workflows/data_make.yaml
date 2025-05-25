@@ -18,7 +18,7 @@ jobs:
           python ./collect-move/src/main/
       - name: 差分チェック
         run: |
-          if ! diff -qr ./tmp/ ./docs/resource/data/ | grep -q ".json"; then
+          if ! diff -qr ./tmp/ ./docs/resource/data/ --exclude=metadata.json | grep -q ".json"; then
             echo "差分なし"
             echo "FLOW_STOP=1" >> $GITHUB_ENV
             exit 0
