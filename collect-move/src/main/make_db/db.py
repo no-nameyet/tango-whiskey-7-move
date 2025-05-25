@@ -1,7 +1,8 @@
 import os
 import re
 import json
-import time
+import datetime
+import pytz
 from bs4 import BeautifulSoup
 
 def convert(file_path):
@@ -119,6 +120,6 @@ def __skills__idx_prefix(soup):
 # メタデータの出力
 def __metadata(paradox):
     return {
-        'timestamp': time.ctime(),
+        'timestamp': datetime.datetime.now(pytz.timezone('Asia/Tokyo')).ctime(),
         'paradox_count': len(paradox),
     }
