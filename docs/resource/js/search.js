@@ -1,9 +1,11 @@
-import { Db } from 'database'
+'use strict';
+import * as db from 'paradoxDB'
 
+/** １度に表示する最大行 */
+const OFFSET = 50;
 
 const SELECTOR_MOVE = Array.from(new Array(10), (_, idx) => idx + 1);
 const SELECTOR_SKILL = Array.from(new Array(30), (_, idx) => idx + 1);
-const SELECTOR_OFFSET = Array.from(new Array(10), (_, idx) => (idx + 1) * 50);
 
 /**
  * querySelectorのエイリアス
@@ -23,16 +25,14 @@ function makeOption(selector, useEmpty) {
 /**
  * 初期化処理
  */
-function initialize() {
+async function initialize() {
+    /** DB初期化 */
+    await db.init();
+
     /** 指定可能パラドクス数 */
     let optMove = makeOption(SELECTOR_MOVE, true);
     /** 指定可能スキル数 */
     let optSkill = makeOption(SELECTOR_SKILL, true);
-    /** 表示パラドクス数 */
-    let optOffset = makeOption(SELECTOR_OFFSET, false);
-
-
-    let db = new Db();
 
     $('#search-condision').insertAdjacentHTML('afterbegin', `
         <form>
@@ -72,72 +72,55 @@ function initialize() {
                 <dt>技能数</dt>
                 <dd><select class="search-condision__select" name="skill">${optSkill}</select></dd>
             </dl>
-            <dl id="search-condision__offset">
-                <dt>表示数</dt>
-                <dd><select class="search-condision__select" name="offset">${optOffset}</select></dd>
-            </dl>
             <div id="search-condision__button">
                 <ul>
                     <li><button type="reset">条件クリア</button></li>
                 </ul>
             </div>
-            <div id="search-condision__meta"></div>
+            <div id="search-condision__meta">${db.metadata()['timestamp']}</div>
+
+            <!-- オフセット -->
+            <input type="hidden" name="offset" value="${OFFSET}"/>
         </form>
     `);
 
-    (async function() {
-        let meta = await db.metadata();
-        $('#search-condision__meta').insertAdjacentHTML('afterbegin', meta.timestamp);
-    })();
-
     $$('.search-condision__select').forEach(elmn => elmn.addEventListener('change', event => {
-        let condition = Object.fromEntries(new FormData($('form')).entries());
-        if (
-            condition['pow1'] != ''
-            || condition['pow2'] != ''
-            || condition['pow3'] != ''
-            || condition['pow4'] != ''
-            || condition['spd1'] != ''
-            || condition['spd2'] != ''
-            || condition['spd3'] != ''
-            || condition['spd4'] != ''
-            || condition['wiz1'] != ''
-            || condition['wiz2'] != ''
-            || condition['wiz3'] != ''
-            || condition['wiz4'] != ''
-        ) {
-            if (condition['offset'] != '' && condition['skill'] != '') {
-                let html = '';
-                for (var row of db.search(condition)) {
-                    let pdx_html = '';
-                    for (var rdx of row) {
-                        pdx_html += `
-                            <li class="search-result__paradox">
-                                <dl class="search-result__detail">
-                                    <dt class="search-result__name">${rdx.name}（${rdx.status}${rdx.target}）</dt>
-                                    <dd class="search-result__skills">
-                                        <ul class="search-result__skill-list">
-                                            <li class="search-result__skill-row">${rdx.skill[0]}</li>
-                                            <li class="search-result__skill-row">${rdx.skill[1]}</li>
-                                            <li class="search-result__skill-row">${rdx.skill[2]}</li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                            </li>
-                        `;
-                    }
-                    html += `
-                        <li class="search-result__pattern">
-                            <ul class="search-result__list">
-                                ${pdx_html}
-                            </ul>
-                        </li>
-                    `;
-                }
-                $('#search-result').innerHTML = '';
-                $('#search-result').insertAdjacentHTML('afterbegin', html);
+        let itrator = db.select(new FormData($('form')));
+
+        let html = '';
+        let idx = 0;
+        for (let row of itrator()) {
+            if (idx++ >= OFFSET) {
+                break;
             }
+            let pdx_html = '';
+            for (var rdx of row) {
+                pdx_html += `
+                    <li class="search-result__paradox">
+                        <dl class="search-result__detail">
+                            <dt class="search-result__name">${rdx.name}（${rdx.status}${rdx.target}）</dt>
+                            <dd class="search-result__skills">
+                                <ul class="search-result__skill-list">
+                                    <li class="search-result__skill-row">${rdx.skill[0]}</li>
+                                    <li class="search-result__skill-row">${rdx.skill[1]}</li>
+                                    <li class="search-result__skill-row">${rdx.skill[2]}</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </li>
+                `;
+            }
+            html += `
+                <li class="search-result__pattern">
+                    <ul class="search-result__list">
+                        ${pdx_html}
+                    </ul>
+                </li>
+            `;
         }
+
+        $('#search-result').innerHTML = '';
+        $('#search-result').insertAdjacentHTML('afterbegin', html);
     }));
 }
 
