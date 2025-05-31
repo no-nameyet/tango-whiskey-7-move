@@ -79,22 +79,6 @@ body {
     line-height: 24px;
     margin: 0;
 }
-#search-condision__offset {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 68px 1fr;
-    margin: 0;
-    padding: 0;
-}
-#search-condision__offset > dt,
-#search-condision__offset > dd {
-    vertical-align: middle;
-    line-height: 24px;
-    margin: 0;
-}
-#search-condision__offset > dd {
-    text-align: left;
-}
 #search-condision__button {
     width: 100%;
     margin: 0;
@@ -117,6 +101,7 @@ body {
 
 #search-result {
     width: 100%;
+    max-width: 952px;
     margin: 0;
     padding: 0;
 }
