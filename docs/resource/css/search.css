@@ -102,7 +102,7 @@ body {
 #search-condision__control > ul {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
     margin:12px 0;
     padding: 0;
 }
@@ -119,6 +119,7 @@ body {
     height: 1.5lh;
     background-color: #5e939e;
     border: none;
+    cursor: pointer;
 }
 .search-condision__select {
     width: 42px;
