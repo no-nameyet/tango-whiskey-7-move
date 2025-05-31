@@ -1,7 +1,16 @@
 @charset "UTF-8";
+* {
+    --color-pow: linear-gradient(transparent 80%, #d46344 80%);
+    --color-spd: linear-gradient(transparent 80%, #4368d7 80%);
+    --color-wiz: linear-gradient(transparent 80%, #2faf80 80%);
+}
 body {
     margin: 0;
     padding: 0;
+    background: linear-gradient(135deg, #051114, #14242c);
+    background-attachment: fixed;
+    background-size: 100vw 100vh;
+    color: #dfdfdf;
 }
 @media screen and (min-width: 800px) {
     body {
@@ -10,19 +19,29 @@ body {
         display: grid;
         grid-template-columns: 328px 1fr;
     }
+    #search-condision > form {
+        position: sticky;
+        top: 0;
+    }
 }
 #search-condision {
     width: 100%;
 }
 #search-condision > form {
-    width: 100%;
-    margin: 0;
-    padding: 0;
+    position: sticky;
+    top: 0;
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: calc(100% - 10px);
+    max-width: 328px;
+    border: double 5px #5da4cb;
+    padding: 3px;
 }
 #search-condision__title {
     width: 100%;
     text-align: center;
-    font-size: 1.1em;
+    font-size: 1.0lh;
+    font-weight: bold;
 }
 #search-condision__status {
     width: 100%;
@@ -30,7 +49,7 @@ body {
 }
 #search-condision__status > dl {
     display: grid;
-    grid-template-columns: 48px 280px;
+    grid-template-columns: 48px 1fr;
     text-align: center;
     margin: 0;
 }
@@ -45,7 +64,7 @@ body {
 }
 .search-condision__status-list > ul {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(66px, 1fr));
     margin: 0;
     padding: 0;
 }
@@ -55,16 +74,11 @@ body {
 }
 .search-condision__row-label {
     display: inline-block;
-    width: 24px;
+    width: 16px;
     vertical-align: middle;
 }
 .search-condision__row-label::after {
     content: ':';
-}
-.search-condision__select {
-    vertical-align: middle;
-    height: 1.6em;
-    width: 42px
 }
 #search-condision__skill {
     width: 100%;
@@ -79,38 +93,50 @@ body {
     line-height: 24px;
     margin: 0;
 }
-#search-condision__button {
+#search-condision__control {
     width: 100%;
     margin: 0;
     padding: 0;
+    text-align: right;
 }
-#search-condision__button > ul {
+#search-condision__control > ul {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     margin:12px 0;
     padding: 0;
 }
-#search-condision__button > ul > li {
+#search-condision__control > ul > li {
     list-style: none;
 }
 #search-condision__meta {
     text-align: center;
-    font-size: 0.8em;
+    font-size: 0.5lh;
+}
+.search-condision__select,
+.search-condision__button {
+    vertical-align: middle;
+    height: 1.5lh;
+    background-color: #5e939e;
+    border: none;
+}
+.search-condision__select {
+    width: 42px;
 }
 
 #search-result {
     width: 100%;
     max-width: 952px;
     margin: 0;
-    padding: 0;
+    box-sizing: border-box;
+    padding: 3px;
 }
 .search-result__pattern {
     width: 100%;
     margin: 3px 0;
-    padding: 0;
+    padding: 3px;
     list-style: none;
-    border: solid 1px #333333;
+    border: solid 3px #162832;
     border-radius: 4px;
     box-sizing: border-box;
 }
@@ -119,7 +145,7 @@ body {
     margin: 3px 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));
 }
 .search-result__paradox {
     width: 100%;
@@ -136,11 +162,41 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
+    color: #4f8995;
+}
+.search-result__name-title {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color: #d3cba8;
 }
 .search-result__skills {
     width: 100%;
     margin: 0;
     padding: 0;
 }
-.search-result__skill-list {}
-.search-result__skill-row {}
+.search-result__skill-list {
+    padding-left: 32px;
+}
+.search-result__skill-row {
+    color: #87d2e1;
+    vertical-align: middle;
+}
+.search-result__skill-row::marker {
+    content: "・ ";
+}
+
+.label__pow,
+.label__spd,
+.label__wiz {
+    font-weight: bold;
+}
+.label__pow {
+    background: var(--color-pow);
+}
+.label__spd {
+    background: var(--color-spd);
+}
+.label__wiz {
+    background: var(--color-wiz);
+}
