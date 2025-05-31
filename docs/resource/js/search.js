@@ -4,6 +4,11 @@ import * as db from 'paradoxDB'
 /** １度に表示する最大行 */
 const OFFSET = 50;
 
+/** メタデータが取得できない場合の標準値 */
+const DEFAULT_METADATA = {
+    timestamp: 'メタデータが取得できませんでした。',
+};
+
 const SELECTOR_MOVE = Array.from(new Array(10), (_, idx) => idx + 1);
 const SELECTOR_SKILL = Array.from(new Array(30), (_, idx) => idx + 1);
 
@@ -35,9 +40,7 @@ async function initialize() {
     let optSkill = makeOption(SELECTOR_SKILL, true);
 
     /** メタデータの取得 */
-    let metadata = db.metadata()['timestamp'] || {
-        timestamp: 'メタデータが取得できませんでした。',
-    };
+    let metadata = db.metadata() || DEFAULT_METADATA;
 
     $('#search-condision').insertAdjacentHTML('afterbegin', `
         <form>
