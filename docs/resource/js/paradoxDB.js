@@ -6,7 +6,11 @@ const DB = new Db();
 
 /** JSONの読み込み */
 async function jsonLoad(path) {
-    return await (await fetch(path)).json();
+    try {
+        return await (await fetch(path)).json();
+    } catch {
+        return '';
+    }
 };
 
 /** 初期化 */
