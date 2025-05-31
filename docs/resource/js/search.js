@@ -34,6 +34,11 @@ async function initialize() {
     /** 指定可能スキル数 */
     let optSkill = makeOption(SELECTOR_SKILL, true);
 
+    /** メタデータの取得 */
+    let metadata = db.metadata()['timestamp'] || {
+        timestamp: 'メタデータが取得できませんでした。',
+    };
+
     $('#search-condision').insertAdjacentHTML('afterbegin', `
         <form>
             <div id="search-condision__title">検索条件</div>
@@ -77,7 +82,7 @@ async function initialize() {
                     <li><button type="reset">条件クリア</button></li>
                 </ul>
             </div>
-            <div id="search-condision__meta">${db.metadata()['timestamp']}</div>
+            <div id="search-condision__meta">${metadata['timestamp']}</div>
 
             <!-- オフセット -->
             <input type="hidden" name="offset" value="${OFFSET}"/>
