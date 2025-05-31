@@ -1,0 +1,21 @@
+name: データ取得ワークフロー
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'Ver.*'
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: htdocsへマージ
+        run: |
+          git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+          git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git checkout htdocs
+          git merge --no-ff $GITHUB_REF -m "${GITHUB_REF#refs/tags/}をhtdocsへマージ"
+          git push origin htdocs
