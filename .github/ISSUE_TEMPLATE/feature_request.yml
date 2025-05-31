@@ -1,6 +1,6 @@
 name: 💡 機能リクエスト
 description: 新機能のアイデアを提案する
-labels: ["enhancement"]
+labels: ["要望／改善提案"]
 body:
   - type: markdown
     attributes:
