@@ -44,7 +44,7 @@ async function initialize() {
             <div id="search-condision__title">検索条件</div>
             <div id="search-condision__status">
                 <dl>
-                    <dt class="search-condision__status-label">POW</dt>
+                    <dt class="search-condision__status-label"><span class="label__pow">POW</span></dt>
                     <dd class="search-condision__status-list">
                         <ul>
                             <li class="search-condision__status-row"><label for="search-condision__pow1" class="search-condision__row-label">1</label><select id="search-condision__pow1" class="search-condision__select" name="pow1">${optMove}</select></li>
@@ -53,7 +53,7 @@ async function initialize() {
                             <li class="search-condision__status-row"><label for="search-condision__pow4" class="search-condision__row-label">4</label><select id="search-condision__pow4" class="search-condision__select" name="pow4">${optMove}</select></li>
                         </ul>
                     </dd>
-                    <dt class="search-condision__status-label">SPD</dt>
+                    <dt class="search-condision__status-label"><span class="label__spd">SPD</span></dt>
                     <dd class="search-condision__status-list">
                         <ul>
                             <li class="search-condision__status-row"><label for="search-condision__spd1" class="search-condision__row-label">1</label><select id="search-condision__spd1" class="search-condision__select" name="spd1">${optMove}</select></li>
@@ -62,7 +62,7 @@ async function initialize() {
                             <li class="search-condision__status-row"><label for="search-condision__spd4" class="search-condision__row-label">4</label><select id="search-condision__spd4" class="search-condision__select" name="spd4">${optMove}</select></li>
                         </ul>
                     </dd>
-                    <dt class="search-condision__status-label">WIZ</dt>
+                    <dt class="search-condision__status-label"><span class="label__wiz">WIZ</span></dt>
                     <dd class="search-condision__status-list">
                         <ul>
                             <li class="search-condision__status-row"><label for="search-condision__wiz1" class="search-condision__row-label">1</label><select id="search-condision__wiz1" class="search-condision__select" name="wiz1">${optMove}</select></li>
@@ -77,9 +77,9 @@ async function initialize() {
                 <dt>技能数</dt>
                 <dd><select class="search-condision__select" name="skill">${optSkill}</select></dd>
             </dl>
-            <div id="search-condision__button">
+            <div id="search-condision__control">
                 <ul>
-                    <li><button type="reset">条件クリア</button></li>
+                    <li><button type="reset" class="search-condision__button">条件クリア</button></li>
                 </ul>
             </div>
             <div id="search-condision__meta">${metadata['timestamp']}</div>
@@ -103,7 +103,7 @@ async function initialize() {
                 pdx_html += `
                     <li class="search-result__paradox">
                         <dl class="search-result__detail">
-                            <dt class="search-result__name">${rdx.name}（${rdx.status}${rdx.target}）</dt>
+                            <dt class="search-result__name"><span class="search-result__name-title label__${rdx.status}">${rdx.name}</span>（${rdx.status}:${rdx.target}）</dt>
                             <dd class="search-result__skills">
                                 <ul class="search-result__skill-list">
                                     <li class="search-result__skill-row">${rdx.skill[0]}</li>
