@@ -1,6 +1,6 @@
 name: 🐛 バグ報告
 description: バグを報告する
-labels: ["バグ報告"]
+labels: ["🐛バグ報告"]
 body:
   - type: markdown
     attributes:
