@@ -1,8 +1,15 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Zen+Kaku+Gothic+New&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Sans+Mono:wght@100..900&family=Zen+Kaku+Gothic+New&display=swap');
+
 * {
     --color-pow: linear-gradient(transparent 80%, #d46344 80%);
     --color-spd: linear-gradient(transparent 80%, #4368d7 80%);
     --color-wiz: linear-gradient(transparent 80%, #2faf80 80%);
+
+    font-family: Bahnschrift, "Zen Kaku Gothic New";
+    font-weight: 400;
+    font-style: normal;
 }
 body {
     margin: 0;
@@ -116,7 +123,7 @@ body {
 .search-condision__select,
 .search-condision__button {
     vertical-align: middle;
-    height: 1.5lh;
+    height: 1.4lh;
     background-color: #5e939e;
     border: none;
     cursor: pointer;
@@ -179,6 +186,7 @@ body {
 .search-result__skill-list {
     padding-left: 32px;
 }
+
 .search-result__skill-row {
     color: #87d2e1;
     vertical-align: middle;
