@@ -30,11 +30,18 @@ export let init = async function () {
     DB.extractier('status', (db, value) => db['idx__status'][value]);
     DB.extractier('target', (db, value) => db['idx__target'][value]);
 
-    DB.filter('skill', ({ db, list, condition: { skill = 0 }, }) => {
-        return Number(skill) >= Object.keys(Array.from(list, key => db['paradox'][key].skill).flat().reduce((skill, key) => {
+    DB.filter('max_skill', ({ list, condition: { max_skill = 0 }, }) => {
+        return Number(max_skill) >= Object.keys(Array.from(list, data => data.skill).flat().reduce((skill, key) => {
             skill[key] = true;
             return skill;
         }, {})).length;
+    });
+    DB.filter('skill', ({ list, condition: { skill = '' }, isLast, }) => {
+        if (isLast && !!skill) {
+            return Array.from(list, data => data.skill).flat().some(row => row == skill);
+        } else {
+            return true;
+        }
     });
     DB.filter('offset', _ => true);
 
@@ -99,9 +106,10 @@ export function select(form) {
         }
     }
     DB.select(extract, filter);
+    return DB.next();
 }
 
-/** イテレータ */
-export function itrator() {
-    return DB.next();
+/** スキル一覧の取得 */
+export async function skillList() {
+    return await jsonLoad('./resource/data/skills__idx-prefix.json');
 }

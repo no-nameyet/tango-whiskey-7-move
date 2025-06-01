@@ -92,8 +92,14 @@
                     </dd>
                 </dl>
             </div>
-            <dl id="search-condision__skill">
+            <dl id="search-condision__filter">
                 <dt>技能数</dt>
+                <dd>
+                    <select id="search-condision__select_max_skill" class="search-condision__select" name="max_skill"></select>
+                </dd>
+            </dl>
+            <dl id="search-condision__filter">
+                <dt>必須技能</dt>
                 <dd>
                     <select id="search-condision__select_skill" class="search-condision__select" name="skill"></select>
                 </dd>
@@ -108,9 +114,12 @@
             <!-- オフセット -->
             <input type="hidden" id="search-condision__offset" name="offset" value="0" />
         </form>
-
-
     </div>
+
+    <!-- 検索結果 -->
     <ul id="search-result"></ul>
+
+    <!-- 最上部へスクロール -->
+    <div id="search-scroll">▲</div>
 </body>
 </html>
