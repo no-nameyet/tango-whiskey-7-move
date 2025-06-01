@@ -114,6 +114,7 @@ export class Db {
     /** イテレータ */
     *next() {
         let list = [];
+        let result = [];
         let indexes = [ 0, ];
 
         while (indexes.length > 0) {
@@ -123,29 +124,21 @@ export class Db {
             // 同一のパラドクスの存在チェック
             if (list.indexOf(data) < 0) {
                 list[idx] = data;
+                result[idx] = this.#data(this.#db, data);
 
-                let torf = true;
                 // フィルターチェック
-                for (let [key, value,] of Object.entries(this.#status.condition)) {
-                    if (!this.#filter[key]({ db: this.#db, list: list, condition: this.#status.condition, })) {
-                        torf = false
-                        break;
-                    }
-                }
-                if (torf) {
+                if (Object.entries(this.#filter).every(([key, func,]) => (!(key in this.#status.condition) || func({ db: this.#db, list, condition: this.#status.condition, })))) {
                     if (list.length == this.#status.elements.length) {
-                        this.#status.count ++;
-                        let result = [];
-                        for (let key of list) {
-                            result.push(this.#data(this.#db, key))
-                        }
+                        this.#status.count++;
                         yield result;
                     } else {
                         indexes.push(0);
                         continue;
                     }
                 }
+
                 list.pop();
+                result.pop();
             }
             do {
                 indexes[list.length]++;
@@ -154,6 +147,7 @@ export class Db {
                 }
                 indexes.pop();
                 list.pop();
+                result.pop();
             } while (indexes.length > 0);
         }
     }
