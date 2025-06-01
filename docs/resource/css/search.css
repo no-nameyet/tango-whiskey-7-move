@@ -89,15 +89,15 @@ body {
 .search-condision__row-label::after {
     content: ':';
 }
-#search-condision__skill {
+#search-condision__filter {
     width: 100%;
     display: grid;
     grid-template-columns: 68px 1fr;
     margin: 0;
     padding: 0;
 }
-#search-condision__skill > dt,
-#search-condision__skill > dd {
+#search-condision__filter > dt,
+#search-condision__filter > dd {
     vertical-align: middle;
     line-height: 28px;
     margin: 0;
@@ -111,7 +111,6 @@ body {
 #search-condision__control > ul {
     width: 100%;
     display: grid;
-    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
     margin: 12px 0;
     padding: 0;
 }
@@ -130,9 +129,6 @@ body {
     border: none;
     cursor: pointer;
 }
-.search-condision__select {
-    width: 42px;
-}
 
 #search-result {
     width: 100%;
@@ -141,8 +137,20 @@ body {
     box-sizing: border-box;
     padding: 3px;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
 .search-result__pattern {
-    width: 100%;
+    animation: fadeIn 1s ease 0s 1 normal backwards;
+    width: calc(100% - 25px);
     margin: 5px 0;
     padding: 3px;
     list-style: none;
@@ -189,6 +197,14 @@ body {
 .search-result__skill-list {
     padding-left: 32px;
 }
+#search-result__next {
+    text-align: center;
+    cursor: pointer;
+    text-decoration: underline;
+}
+#search-result__next:hover {
+    text-decoration: none;
+}
 
 .search-result__skill-row {
     color: #87d2e1;
@@ -196,6 +212,32 @@ body {
 }
 .search-result__skill-row::marker {
     content: "・ ";
+}
+.search-result__skill-row--mark {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #e9ff56;
+}
+
+#search-scroll {
+    position: fixed;
+    right: 20;
+    bottom: 20;
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    border: solid 2px #5da4cb;
+    box-shadow: 2px 2px#5da4cb;
+    border-radius: 14px;
+    cursor: pointer;
+    user-select: none;
+    background-color: #051114;
+}
+#search-scroll:active {
+    right: 18;
+    bottom: 18;
+    box-shadow: none;
 }
 
 .label__pow,

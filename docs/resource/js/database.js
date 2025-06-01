@@ -94,6 +94,9 @@ export class Db {
             condition: filterCondition,
             count: 0,
             elements: [],
+            keyList: [],
+            dataList: [],
+            indexes: [0,],
         }
 
         // 組み合わせ対象のリストを設定
@@ -113,42 +116,38 @@ export class Db {
     //
     /** イテレータ */
     *next() {
-        let list = [];
-        let result = [];
-        let indexes = [ 0, ];
-
-        while (indexes.length > 0) {
-            let idx = list.length;
-            let data = this.#status.elements[idx][indexes[idx]];
+        while (this.#status.indexes.length > 0) {
+            let idx = this.#status.keyList.length;
+            let data = this.#status.elements[idx][this.#status.indexes[idx]];
 
             // 同一のパラドクスの存在チェック
-            if (list.indexOf(data) < 0) {
-                list[idx] = data;
-                result[idx] = this.#data(this.#db, data);
+            if (this.#status.keyList.indexOf(data) < 0) {
+                this.#status.keyList[idx] = data;
+                this.#status.dataList[idx] = this.#data(this.#db, data);
 
                 // フィルターチェック
-                if (Object.entries(this.#filter).every(([key, func,]) => (!(key in this.#status.condition) || func({ db: this.#db, list, condition: this.#status.condition, })))) {
-                    if (list.length == this.#status.elements.length) {
+                if (Object.entries(this.#filter).every(([key, func,]) => (!(key in this.#status.condition) || func({ keyList: this.#status.keyList, list: this.#status.dataList, condition: this.#status.condition, isLast: this.#status.keyList.length == this.#status.elements.length, })))) {
+                    if (this.#status.keyList.length == this.#status.elements.length) {
                         this.#status.count++;
-                        yield result;
+                        yield this.#status.dataList;
                     } else {
-                        indexes.push(0);
+                        this.#status.indexes.push(0);
                         continue;
                     }
                 }
 
-                list.pop();
-                result.pop();
+                this.#status.keyList.pop();
+                this.#status.dataList.pop();
             }
             do {
-                indexes[list.length]++;
-                if (this.#status.elements[list.length].length > indexes[list.length]) {
+                this.#status.indexes[this.#status.keyList.length]++;
+                if (this.#status.elements[this.#status.keyList.length].length > this.#status.indexes[this.#status.keyList.length]) {
                     break;
                 }
-                indexes.pop();
-                list.pop();
-                result.pop();
-            } while (indexes.length > 0);
+                this.#status.indexes.pop();
+                this.#status.keyList.pop();
+                this.#status.dataList.pop();
+            } while (this.#status.indexes.length > 0);
         }
     }
 }
