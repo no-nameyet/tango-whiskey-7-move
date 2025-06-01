@@ -21,7 +21,96 @@
 </head>
 
 <body>
-    <div id="search-condision"></div>
+    <!-- 検索条件 -->
+    <div id="search-condision">
+        <form>
+            <div id="search-condision__title">検索条件</div>
+            <div id="search-condision__status">
+                <dl>
+                    <dt class="search-condision__status-label"><span class="label__pow">POW</span></dt>
+                    <dd class="search-condision__status-list">
+                        <ul>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__pow1" class="search-condision__row-label">1</label>
+                                <select id="search-condision__pow1" class="search-condision__select search-condision__select_status" name="pow1"></select>
+                            </li>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__pow2" class="search-condision__row-label">2</label>
+                                <select id="search-condision__pow2" class="search-condision__select search-condision__select_status" name="pow2"></select>
+                            </li>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__pow3" class="search-condision__row-label">3</label>
+                                <select id="search-condision__pow3" class="search-condision__select search-condision__select_status" name="pow3"></select>
+                            </li>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__pow4" class="search-condision__row-label">4</label>
+                                <select id="search-condision__pow4" class="search-condision__select search-condision__select_status" name="pow4"></select>
+                            </li>
+                        </ul>
+                    </dd>
+                    <dt class="search-condision__status-label"><span class="label__spd">SPD</span></dt>
+                    <dd class="search-condision__status-list">
+                        <ul>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__spd1" class="search-condision__row-label">1</label>
+                                <select id="search-condision__spd1" class="search-condision__select search-condision__select_status" name="spd1"></select>
+                            </li>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__spd2" class="search-condision__row-label">2</label>
+                                <select id="search-condision__spd2" class="search-condision__select search-condision__select_status" name="spd2"></select>
+                            </li>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__spd3" class="search-condision__row-label">3</label>
+                                <select id="search-condision__spd3" class="search-condision__select search-condision__select_status" name="spd3"></select>
+                            </li>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__spd4" class="search-condision__row-label">4</label>
+                                <select id="search-condision__spd4" class="search-condision__select search-condision__select_status" name="spd4"></select>
+                            </li>
+                        </ul>
+                    </dd>
+                    <dt class="search-condision__status-label"><span class="label__wiz">WIZ</span></dt>
+                    <dd class="search-condision__status-list">
+                        <ul>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__wiz1" class="search-condision__row-label">1</label>
+                                <select id="search-condision__wiz1" class="search-condision__select search-condision__select_status" name="wiz1"></select>
+                            </li>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__wiz2" class="search-condision__row-label">2</label>
+                                <select id="search-condision__wiz2" class="search-condision__select search-condision__select_status" name="wiz2"></select>
+                            </li>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__wiz3" class="search-condision__row-label">3</label>
+                                <select id="search-condision__wiz3" class="search-condision__select search-condision__select_status" name="wiz3"></select>
+                            </li>
+                            <li class="search-condision__status-row">
+                                <label for="search-condision__wiz4" class="search-condision__row-label">4</label>
+                                <select id="search-condision__wiz4" class="search-condision__select search-condision__select_status" name="wiz4"></select>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <dl id="search-condision__skill">
+                <dt>技能数</dt>
+                <dd>
+                    <select id="search-condision__select_skill" class="search-condision__select" name="skill"></select>
+                </dd>
+            </dl>
+            <div id="search-condision__control">
+                <ul>
+                    <li><button type="reset" class="search-condision__button">条件クリア</button></li>
+                </ul>
+            </div>
+            <div id="search-condision__meta"></div>
+
+            <!-- オフセット -->
+            <input type="hidden" id="search-condision__offset" name="offset" value="0" />
+        </form>
+
+
+    </div>
     <ul id="search-result"></ul>
 </body>
 </html>

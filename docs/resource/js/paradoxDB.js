@@ -99,5 +99,9 @@ export function select(form) {
         }
     }
     DB.select(extract, filter);
-    return DB.next.bind(DB);
+}
+
+/** イテレータ */
+export function itrator() {
+    return DB.next();
 }

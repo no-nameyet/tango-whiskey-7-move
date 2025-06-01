@@ -3,6 +3,10 @@ import * as db from 'paradoxDB'
 
 /** １度に表示する最大行 */
 const OFFSET = 50;
+/** 選択可能ステータス数 */
+const OPTION_STATUS = 10;
+/** 技能上限数 */
+const OPTION_MAX_SKILL = 10;
 
 /** メタデータが取得できない場合の標準値 */
 const DEFAULT_METADATA = {
@@ -31,79 +35,47 @@ function makeOption(selector, useEmpty) {
  * 初期化処理
  */
 async function initialize() {
-    /** DB初期化 */
+    // DB初期化
     await db.init();
-
-    /** 指定可能パラドクス数 */
-    let optMove = makeOption(SELECTOR_MOVE, true);
-    /** 指定可能スキル数 */
-    let optSkill = makeOption(SELECTOR_SKILL, true);
-
     /** メタデータの取得 */
-    let metadata = db.metadata() || DEFAULT_METADATA;
+    const metadata = db.metadata() || DEFAULT_METADATA;
 
-    $('#search-condision').insertAdjacentHTML('afterbegin', `
-        <form>
-            <div id="search-condision__title">検索条件</div>
-            <div id="search-condision__status">
-                <dl>
-                    <dt class="search-condision__status-label"><span class="label__pow">POW</span></dt>
-                    <dd class="search-condision__status-list">
-                        <ul>
-                            <li class="search-condision__status-row"><label for="search-condision__pow1" class="search-condision__row-label">1</label><select id="search-condision__pow1" class="search-condision__select" name="pow1">${optMove}</select></li>
-                            <li class="search-condision__status-row"><label for="search-condision__pow2" class="search-condision__row-label">2</label><select id="search-condision__pow2" class="search-condision__select" name="pow2">${optMove}</select></li>
-                            <li class="search-condision__status-row"><label for="search-condision__pow3" class="search-condision__row-label">3</label><select id="search-condision__pow3" class="search-condision__select" name="pow3">${optMove}</select></li>
-                            <li class="search-condision__status-row"><label for="search-condision__pow4" class="search-condision__row-label">4</label><select id="search-condision__pow4" class="search-condision__select" name="pow4">${optMove}</select></li>
-                        </ul>
-                    </dd>
-                    <dt class="search-condision__status-label"><span class="label__spd">SPD</span></dt>
-                    <dd class="search-condision__status-list">
-                        <ul>
-                            <li class="search-condision__status-row"><label for="search-condision__spd1" class="search-condision__row-label">1</label><select id="search-condision__spd1" class="search-condision__select" name="spd1">${optMove}</select></li>
-                            <li class="search-condision__status-row"><label for="search-condision__spd2" class="search-condision__row-label">2</label><select id="search-condision__spd2" class="search-condision__select" name="spd2">${optMove}</select></li>
-                            <li class="search-condision__status-row"><label for="search-condision__spd3" class="search-condision__row-label">3</label><select id="search-condision__spd3" class="search-condision__select" name="spd3">${optMove}</select></li>
-                            <li class="search-condision__status-row"><label for="search-condision__spd4" class="search-condision__row-label">4</label><select id="search-condision__spd4" class="search-condision__select" name="spd4">${optMove}</select></li>
-                        </ul>
-                    </dd>
-                    <dt class="search-condision__status-label"><span class="label__wiz">WIZ</span></dt>
-                    <dd class="search-condision__status-list">
-                        <ul>
-                            <li class="search-condision__status-row"><label for="search-condision__wiz1" class="search-condision__row-label">1</label><select id="search-condision__wiz1" class="search-condision__select" name="wiz1">${optMove}</select></li>
-                            <li class="search-condision__status-row"><label for="search-condision__wiz2" class="search-condision__row-label">2</label><select id="search-condision__wiz2" class="search-condision__select" name="wiz2">${optMove}</select></li>
-                            <li class="search-condision__status-row"><label for="search-condision__wiz3" class="search-condision__row-label">3</label><select id="search-condision__wiz3" class="search-condision__select" name="wiz3">${optMove}</select></li>
-                            <li class="search-condision__status-row"><label for="search-condision__wiz4" class="search-condision__row-label">4</label><select id="search-condision__wiz4" class="search-condision__select" name="wiz4">${optMove}</select></li>
-                        </ul>
-                    </dd>
-                </dl>
-            </div>
-            <dl id="search-condision__skill">
-                <dt>技能数</dt>
-                <dd><select class="search-condision__select" name="skill">${optSkill}</select></dd>
-            </dl>
-            <div id="search-condision__control">
-                <ul>
-                    <li><button type="reset" class="search-condision__button">条件クリア</button></li>
-                </ul>
-            </div>
-            <div id="search-condision__meta">${metadata['timestamp']}</div>
+    //
+    // 検索条件
+    //
 
-            <!-- オフセット -->
-            <input type="hidden" name="offset" value="${OFFSET}"/>
-        </form>
-    `);
+    // ステータス
+    (_ => {
+        let opt = '<option></option>';
+        for (let idx = 1; OPTION_STATUS >= idx; idx++) {
+            opt += `<option value="${idx}">${idx}</option>`;
+        }
+        $$('.search-condision__select_status').forEach(elmn => elmn.insertAdjacentHTML('afterbegin', opt));
+    })();
+    // 技能
+    (_ => {
+        let opt = '<option></option>';
+        for (let idx = 3; OPTION_MAX_SKILL >= idx; idx++) {
+            opt += `<option value="${idx}">${idx}</option>`;
+        }
+        $('#search-condision__select_skill').insertAdjacentHTML('afterbegin', opt);
+    })();
+    // オフセット
+    (_ => {
+        $('#search-condision__offset').value = OFFSET;
+    })();
+    // タイムスタンプの表示
+    (_ => {
+        $('#search-condision__meta').insertAdjacentHTML('afterbegin', metadata['timestamp']);
+    })();
 
-    $$('.search-condision__select').forEach(elmn => elmn.addEventListener('change', event => {
-        let itrator = db.select(new FormData($('form')));
-
-        let html = '';
+    /** 一覧の追加 */
+    const appendResult = _ => {
         let idx = 0;
-        for (let row of itrator()) {
-            if (idx++ >= OFFSET) {
-                break;
-            }
-            let pdx_html = '';
-            for (var rdx of row) {
-                pdx_html += `
+        for (let data of db.itrator()) {
+            let html = '';
+            for (var rdx of data) {
+                html += `
                     <li class="search-result__paradox">
                         <dl class="search-result__detail">
                             <dt class="search-result__name"><span class="search-result__name-title label__${rdx.status}">${rdx.name}</span>（${rdx.status}:${rdx.target}）</dt>
@@ -118,17 +90,24 @@ async function initialize() {
                     </li>
                 `;
             }
-            html += `
+            $('#search-result').insertAdjacentHTML('afterbegin', `
                 <li class="search-result__pattern">
                     <ul class="search-result__list">
-                        ${pdx_html}
+                        ${html}
                     </ul>
                 </li>
-            `;
+            `);
+            if (++idx >= OFFSET) {
+                break;
+            }
         }
+    };
 
+    // 検索条件の変更
+    $$('.search-condision__select').forEach(elmn => elmn.addEventListener('change', event => {
         $('#search-result').innerHTML = '';
-        $('#search-result').insertAdjacentHTML('afterbegin', html);
+        db.select(new FormData($('form')));
+        appendResult();
     }));
 }
 
